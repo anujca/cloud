@@ -22,7 +22,10 @@ fi
 
 done
 cat func.sh
+chmod 755 func.sh
+. ./func.sh
 }
+
 
 upload() {
     cd
