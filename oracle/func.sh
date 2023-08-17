@@ -1,14 +1,15 @@
 getjdbc() {
-wget https://raw.githubusercontent.com/anujca/cloud/main/oracle/ojdbc8-21.9.0.0.jar
-wget https://raw.githubusercontent.com/anujca/cloud/main/oracle/ojdbc8-23.2.0.0.jar
-wget https://raw.githubusercontent.com/anujca/cloud/main/oracle/ojdbc10-19.20.0.0.jar 
-wget https://raw.githubusercontent.com/anujca/cloud/main/oracle/ojdbc11-21.9.0.0.jar 
-wget https://raw.githubusercontent.com/anujca/cloud/main/oracle/ojdbc11-23.2.0.0.jar 
-wget https://raw.githubusercontent.com/anujca/cloud/main/oracle/ojdbc8-19.20.0.0.jar
-wget https://raw.githubusercontent.com/anujca/cloud/main/oracle/ojdbc5-11.2.0.4.jar 
-wget https://raw.githubusercontent.com/anujca/cloud/main/oracle/ojdbc6-11.2.0.4.jar 
-wget https://raw.githubusercontent.com/anujca/cloud/main/oracle/oracle.java
-wget https://raw.githubusercontent.com/anujca/cloud/main/oracle/func.txt
+cd
+mkdir -p oracle
+cd oracle
+for i in ojdbc8-21.9.0.0.jar ojdbc8-23.2.0.0.jar ojdbc10-19.20.0.0.jar ojdbc11-21.9.0.0.jar ojdbc11-23.2.0.0.jar ojdbc8-19.20.0.0.jar ojdbc5-11.2.0.4.jar  ojdbc6-11.2.0.4.jar  oracle.java func.sh
+do
+if [ -f $i ]; then
+rm $i
+fi
+wget https://raw.githubusercontent.com/anujca/cloud/main/oracle/$i
+done
+cat func.sh
 }
 
 findjava() {
@@ -20,15 +21,25 @@ sudo su -c "find / -name javac 2>/dev/null"
 }
 
 findnetstat() {
-sudo su -c "pid=$(ps -ef|grep java|grep ssm|awk '{print $2}');netstat -townp|grep $pid"
+ps -ef|grep java|grep ssm|grep -v grep|awk '{print $2}'|while read line
+do
+netstat -townp|grep $line
+done
 }
 
 
 runme() {
 cd ~/oracle
-export java=/apps/tcserver/install/java/jdk1.6.0_171/bin/java
-export javac=/apps/tcserver/install/java/jdk1.6.0_171/bin/javac
-export jdbc=/apps/tcserver/local/vfabric-tc-server-standard-2.7.0.RELEASE/instances/2_LR_TU_CL8003_M1/lib/ojdbc6.jar
+export java=/apps/tcserver/install/java/jdk1.7.0_04/bin/java
+export javac=/apps/tcserver/install/java/jdk1.7.0_04/bin/javac
+jdbc1=ojdbc10-19.20.0.0.jar
+jdbc2=ojdbc11-21.9.0.0.jar
+jdbc3=ojdbc11-23.2.0.0.jar
+jdbc4=ojdbc5-11.2.0.4.jar
+jdbc5=ojdbc6-11.2.0.4.jar
+jdbc6=ojdbc8-19.20.0.0.jar
+jdbc7=ojdbc8-21.9.0.0.jar
+jdbc8=ojdbc8-23.2.0.0.jar
 export class=~/oracle/.
 jdbc=$(eval echo \${jdbc$2})
 $javac oracle.java
