@@ -54,8 +54,8 @@ done
 
 runme() {
 cd ~/oracle
-export java=/apps/tcserver/install/java/jdk1.7.0_04/bin/java
-export javac=/apps/tcserver/install/java/jdk1.7.0_04/bin/javac
+export java=/apps/oracle/product/19.3.0.0/jdk/bin/java
+export javac=/apps/oracle/product/19.3.0.0/jdk/bin/javac
 jdbc1=ojdbc10-19.20.0.0.jar
 jdbc2=ojdbc11-21.9.0.0.jar
 jdbc3=ojdbc11-23.2.0.0.jar
